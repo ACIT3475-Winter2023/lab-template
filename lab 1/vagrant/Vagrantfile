@@ -23,8 +23,42 @@ boxes = [
 	},
 	{ name: "APP1",
 	  box: "ubuntu/jammy64",
-	  ram: "1024",
+	  ram: "512",
 	  cpus: "2",
+	  guesttype: "ubuntu",
+		nics: [
+			{
+				type: "hostonly"
+			}
+		#	{
+		#		type: "internal", # bridged or internal
+		#		name: "intsec_dmz", # enter bridge interface or internal network name
+		#		ip: "10.50.2.2", # EDIT THIS
+		#		netmask: "255.255.255.0"
+		#	}
+		]
+	},
+	{ name: "APP2",
+	  box: "ubuntu/jammy64",
+	  ram: "512",
+	  cpus: "1",
+	  guesttype: "ubuntu",
+		nics: [
+			{
+				type: "hostonly"
+			}
+		#	{
+		#		type: "internal", # bridged or internal
+		#		name: "intsec_dmz", # enter bridge interface or internal network name
+		#		ip: "10.50.2.2", # EDIT THIS
+		#		netmask: "255.255.255.0"
+		#	}
+		]
+	},
+	{ name: "APP3",
+	  box: "ubuntu/jammy64",
+	  ram: "512",
+	  cpus: "1",
 	  guesttype: "ubuntu",
 		nics: [
 			{
@@ -79,9 +113,11 @@ Vagrant.configure("2") do |config|
 				end
 			end
 
-			srv.vm.provision "ansible_local" do |ansible|
+            if machine[:name] =~ %r{APP*}
+			  srv.vm.provision "ansible_local" do |ansible|
 				ansible.playbook = "ansible/default.yml"
-			end
+			  end
+            end
 
 			# VIRTUALBOX CONFIGURATION
 			srv.vm.provider :virtualbox do |v|
