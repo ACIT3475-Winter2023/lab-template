@@ -41,7 +41,7 @@ boxes = [
 	{ name: "APP2",
 	  box: "ubuntu/jammy64",
 	  ram: "512",
-	  cpus: "1",
+	  cpus: "2",
 	  guesttype: "ubuntu",
 		nics: [
 			{
@@ -58,7 +58,7 @@ boxes = [
 	{ name: "APP3",
 	  box: "ubuntu/jammy64",
 	  ram: "512",
-	  cpus: "1",
+	  cpus: "2",
 	  guesttype: "ubuntu",
 		nics: [
 			{
