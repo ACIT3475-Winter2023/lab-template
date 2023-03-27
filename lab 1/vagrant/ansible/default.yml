@@ -20,15 +20,31 @@
       - snapd.socket
       - snapd.service
 
+  - name: "Remove any existing nodejs versions"
+    apt:
+      update_cache: yes
+      name: "{{ item }}"
+      state: absent
+    loop:
+      - nodejs
+      - libnode72
+
   - name: "Add nodejs apt key"
     apt_key:
       url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
       state: present
 
-  - name: "Add nodejs 19.x ppa for apt repository"
+  - name: "Remove nodejs 19.x ppa for apt repository"
     apt_repository:
       repo: deb https://deb.nodesource.com/node_19.x jammy main
       update_cache: yes
+      state: absent
+
+  - name: "Add nodejs 18.x ppa for apt repository"
+    apt_repository:
+      repo: deb https://deb.nodesource.com/node_18.x jammy main
+      update_cache: yes
+      state: present
 
   - name: "Install nodejs"
     apt:
